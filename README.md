@@ -1,2 +1,4 @@
 # pytorch-complex-tensor
-Complex tensor support for pytorch
+torch.Tensor subclass to emulate complex linear algebra.   
+
+Treats first half of tensor as real, second as imaginary.  A few arithmetic operations are implemented to emulate complex arithmetic.   
