@@ -36,14 +36,6 @@ Supported ops:
 
 class ComplexTensor(torch.Tensor):
 
-    @staticmethod
-    def __new__(cls, x, *args, **kwargs):
-        if len(args) > 0:
-            size_args = [2] + list(args)
-            args = tuple(size_args)
-
-        return super().__new__(cls, x, *args, **kwargs)
-
     def __deepcopy__(self, memo):
         if not self.is_leaf:
             raise RuntimeError("Only Tensors created explicitly by the user "
