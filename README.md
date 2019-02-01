@@ -29,3 +29,15 @@ xy = xy.sum()
 xy.backward()
 print(C.grad)
 ```
+
+### Supported ops:
+1. addition 
+    - (tensor, scalar). Both complex and real.
+2. subtraction 
+    - (tensor, scalar). Both complex and real.
+3. multiply
+    - (tensor, scalar). Both complex and real.
+4. mm (matrix multiply)
+    - (tensor). Both complex and real.
+5. abs (absolute value)
+6. t (transpose)
