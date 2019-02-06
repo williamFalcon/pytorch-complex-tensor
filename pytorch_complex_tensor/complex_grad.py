@@ -2,6 +2,9 @@ import torch
 import numpy as np
 import re
 
+"""
+Does nothing except pretty print complex grad info
+"""
 
 class ComplexGrad(torch.Tensor):
 
