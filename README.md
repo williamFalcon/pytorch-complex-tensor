@@ -17,23 +17,43 @@ from pytorch_complex_tensor import ComplexTensor
 C = ComplexTensor([[1, 1, 1], [2, 2, 2], [3, 3, 3], [4, 4, 4]])
 C.requires_grad = True
 
+print(C)
+# tensor([['(1.0+3.0j)' '(1.0+3.0j)' '(1.0+3.0j)'],
+#         ['(2.0+4.0j)' '(2.0+4.0j)' '(2.0+4.0j)']])
+
 # complex version
 print(C.abs())
+# tensor([[3.1623, 3.1623, 3.1623],
+#         [4.4721, 4.4721, 4.4721]], grad_fn=<SqrtBackward>)
 
 # number of complex numbers is half of what it says here
 print(C.size())
+# torch.Size([4, 3])
 
 # show matrix multiply with real tensor
 # also works with complex tensor
 x = torch.Tensor([[3, 3], [4, 4], [2, 2]])
 xy = C.mm(x)
 print(xy)
+# tensor([['(9.0+27.0j)' '(9.0+27.0j)'],
+#         ['(18.0+36.0j)' '(18.0+36.0j)']])
 
 # show gradients didn't break
 xy = xy.sum()
+
+# this is now a complex scalar (thin wrapper with .real, .imag)
+print(type(xy))
+# pytorch_complex_tensor.complex_scalar.ComplexScalar
+
+# calculate dxy / dC
 xy.backward()
 print(C.grad)
+# tensor([[6., 8., 4.],
+#         [6., 8., 4.],
+#         [0., 0., 0.],
+#         [0., 0., 0.]])
 ```
+
 
 ### Supported ops:
 1. addition 
