@@ -10,6 +10,7 @@ pip install pytorch-complex-tensor
 
 ### Example:   
 ```python   
+from pytorch_complex_tensor import ComplexTensor
 
 # equivalent to:
 # np.asarray([[1+3j, 1+3j, 1+3j], [2+4j, 2+4j, 2+4j]]).astype(np.complex64)
