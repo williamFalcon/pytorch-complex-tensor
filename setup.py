@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(name='pytorch-complex-tensor',
-      version='0.0.121',
+      version='0.0.122',
       description='Pytorch complex tensor',
       author='',
       author_email='',
