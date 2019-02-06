@@ -58,13 +58,14 @@ print(C.grad)
 
 
 ### Supported ops:
-1. addition 
-    - (tensor, scalar). Both complex and real.
-2. subtraction 
-    - (tensor, scalar). Both complex and real.
-3. multiply
-    - (tensor, scalar). Both complex and real.
-4. mm (matrix multiply)
-    - (tensor). Both complex and real.
-5. abs (absolute value)
-6. t (transpose)
+| Operation | complex tensor | real tensor | complex scalar | real scalar |
+| ----------| :-------------:|:-----------:|:--------------:|:-----------:|   
+| addition | Y | Y | Y | Y |
+| subtraction | Y | Y | Y | Y |
+| multiply | Y | Y | Y | Y |
+| mm | Y | Y | Y | Y |
+| abs | Y | - | - | - |
+| t | Y | - | - | - |
+| grads | Y | Y | Y | Y |   
+
+
