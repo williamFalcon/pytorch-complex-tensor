@@ -1,6 +1,6 @@
-import torch
 from pytorch_complex_tensor.complex_scalar import ComplexScalar
 import numpy as np
+import torch
 import re
 
 
@@ -238,19 +238,3 @@ class ComplexTensor(torch.Tensor):
 
     def __str__(self):
         return self.__repr__()
-
-
-if __name__ == '__main__':
-    c = ComplexTensor([[1, 1, 1], [2, 2, 2], [3, 3, 3], [4, 4, 4]])
-    print(c)
-    c.requires_grad = True
-    print(c.abs())
-    print(c.size())
-
-    x = torch.Tensor([[3, 3], [4, 4], [2, 2]])
-
-    xy = c.mm(x)
-    xy_real, xy_imag = xy.sum()
-
-    xy_real.backward()
-    print(c.grad)
