@@ -1,6 +1,6 @@
 import torch
+from pytorch_complex_tensor.complex_scalar import ComplexScalar
 import numpy as np
-from torch import nn
 
 
 """
@@ -74,6 +74,13 @@ class ComplexTensor(torch.Tensor):
         # force the result to be a ComplexTensor
         result = torch.cat([real, imag], dim=0)
         result.__class__ = ComplexTensor
+        return result
+
+    def __graph_copy_scalar__(self, real, imag):
+        # return tensor copy but maintain graph connections
+        # force the result to be a ComplexTensor
+        result = torch.stack([real, imag], dim=0)
+        result.__class__ = ComplexScalar
         return result
 
     def __add__(self, other):
@@ -208,6 +215,17 @@ class ComplexTensor(torch.Tensor):
         result = torch.sqrt(self.real**2 + self.imag**2)
         return result
 
+    def sum(self, *args):
+        real_sum = self.real.sum(*args)
+        imag_sum = self.imag.sum(*args)
+        return ComplexScalar(real_sum, imag_sum)
+
+    def mean(self, *args):
+        real_mean = self.real.mean(*args)
+        imag_mean = self.imag.mean(*args)
+        return ComplexScalar(real_mean, imag_mean)
+
+
 if __name__ == '__main__':
     c = ComplexTensor([[1, 1, 1], [2, 2, 2], [3, 3, 3], [4, 4, 4]])
     c.requires_grad = True
@@ -217,7 +235,7 @@ if __name__ == '__main__':
     x = torch.Tensor([[3, 3], [4, 4], [2, 2]])
 
     xy = c.mm(x)
-    xy = xy.sum()
+    xy_real, xy_imag = xy.sum()
 
-    xy.backward()
+    xy_real.backward()
     print(c.grad)
