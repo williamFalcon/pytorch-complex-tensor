@@ -21,7 +21,7 @@ print(C)
 # tensor([['(1.0+3.0j)' '(1.0+3.0j)' '(1.0+3.0j)'],
 #         ['(2.0+4.0j)' '(2.0+4.0j)' '(2.0+4.0j)']])
 
-# complex version
+# complex absolute value implementation
 print(C.abs())
 # tensor([[3.1623, 3.1623, 3.1623],
 #         [4.4721, 4.4721, 4.4721]], grad_fn=<SqrtBackward>)
