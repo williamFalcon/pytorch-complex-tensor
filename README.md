@@ -52,10 +52,8 @@ print(xy)
 # for complex scalars, grad is wrt the real part
 xy.backward()
 print(C.grad)
-# tensor([[6., 8., 4.],
-#         [6., 8., 4.],
-#         [0., 0., 0.],
-#         [0., 0., 0.]])
+# tensor([['(6.0-0.0j)' '(8.0-0.0j)' '(4.0-0.0j)'],
+#         ['(6.0-0.0j)' '(8.0-0.0j)' '(4.0-0.0j)']])
 ```
 
 
