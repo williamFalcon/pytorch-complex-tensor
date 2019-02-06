@@ -1,6 +1,7 @@
 import torch
 from pytorch_complex_tensor.complex_scalar import ComplexScalar
 import numpy as np
+import re
 
 
 """
@@ -225,9 +226,23 @@ class ComplexTensor(torch.Tensor):
         imag_mean = self.imag.mean(*args)
         return ComplexScalar(real_mean, imag_mean)
 
+    def __repr__(self):
+        size = self.real.size()
+        real = self.real.view(-1)
+        imag = self.imag.view(-1)
+        strings = np.asarray([f'({a}{"+" if b > 0 else "-"}{abs(b)}j)' for a, b in zip(real, imag)])
+        strings = strings.reshape(*size)
+        strings = f'tensor({strings.__str__()})'
+        strings = re.sub('\n', ',\n       ', strings)
+        return strings
+
+    def __str__(self):
+        return self.__repr__()
+
 
 if __name__ == '__main__':
     c = ComplexTensor([[1, 1, 1], [2, 2, 2], [3, 3, 3], [4, 4, 4]])
+    print(c)
     c.requires_grad = True
     print(c.abs())
     print(c.size())
