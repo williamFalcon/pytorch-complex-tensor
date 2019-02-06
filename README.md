@@ -45,7 +45,11 @@ xy = xy.sum()
 print(type(xy))
 # pytorch_complex_tensor.complex_scalar.ComplexScalar
 
+print(xy)
+# (54+126j)
+
 # calculate dxy / dC
+# for complex scalars, grad is wrt the real part
 xy.backward()
 print(C.grad)
 # tensor([[6., 8., 4.],
