@@ -25,4 +25,4 @@ class ComplexScalar(object):
         return str(complex(self.real.item(), self.imag.item()))
 
     def __str__(self):
-        return complex(self.real.item(), self.imag.item())
+        return self.__repr__()
