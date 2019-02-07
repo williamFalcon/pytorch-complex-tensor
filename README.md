@@ -15,10 +15,9 @@
   <a href="https://github.com/williamFalcon/pytorch-complex-tensor/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 </p>   
 
-# pytorch-complex-tensor
-torch.Tensor subclass to emulate complex linear algebra.   
+### How it works
 
-Treats first half of tensor as real, second as imaginary.  A few arithmetic operations are implemented to emulate complex arithmetic.   
+Treats first half of tensor as real, second as imaginary.  A few arithmetic operations are implemented to emulate complex arithmetic. Supports gradients.   
 
 ### Installation
 ```bash
