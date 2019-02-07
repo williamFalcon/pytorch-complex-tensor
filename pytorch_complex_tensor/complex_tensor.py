@@ -38,6 +38,22 @@ Supported ops:
 
 class ComplexTensor(torch.Tensor):
 
+    @staticmethod
+    def __new__(cls, x, *args, **kwargs):
+        # requested to init with dim list
+        # double the second to last dim (..., 1, 3, 2) -> (..., 1, 6, 2)
+
+        # x is the second to last dim in this case
+        if type(x) is int and len(args) == 1:
+            x = x * 2
+        elif len(args) >= 2:
+            size_args = list(args)
+            size_args[-2] *= 2
+            args = tuple(size_args)
+
+        return super().__new__(cls, x, *args, **kwargs)
+
+
     def __deepcopy__(self, memo):
         if not self.is_leaf:
             raise RuntimeError("Only Tensors created explicitly by the user "
@@ -255,7 +271,6 @@ class ComplexTensor(torch.Tensor):
 
 
 if __name__ == '__main__':
-    c = ComplexTensor(torch.zeros(4, 3)) + 1
-    r = torch.ones(2, 3) * 2 + 3
-    cr = c.mm(r.t())
-    print(cr)
+    c = ComplexTensor(2, 3, 4)
+    c = ComplexTensor(torch.zeros(3,4))
+    print(c.shape)
