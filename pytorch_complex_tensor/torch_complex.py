@@ -9,11 +9,13 @@ def __graph_copy__(real, imag):
     result.__class__ = ComplexTensor
     return result
 
+
 def stack(items, *args, **kwargs):
+    fx = torch.stack
     r = [x.real for x in items]
-    r = torch.stack(r, *args, **kwargs)
+    r = fx(r, *args, **kwargs)
 
     i = [x.imag for x in items]
-    i = torch.stack(i, *args, **kwargs)
+    i = fx(i, *args, **kwargs)
 
     return __graph_copy__(r, i)
