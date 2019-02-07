@@ -55,10 +55,10 @@ print(C.abs())
 ```
 
 
-number of complex numbers is half of what it says here (printing WIP)
+prints correct sizing treating first half of matrix as real, second as imag
 ```
 print(C.size())
-# torch.Size([4, 3])
+# torch.Size([2, 3])
 ```
 
 multiplies both complex and real tensors
