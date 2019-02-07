@@ -250,3 +250,10 @@ class ComplexTensor(torch.Tensor):
     def __str__(self):
         return self.__repr__()
 
+    def is_complex(self):
+        return True
+
+
+if __name__ == '__main__':
+    c = ComplexTensor(torch.Tensor(4, 4))
+    print('c')

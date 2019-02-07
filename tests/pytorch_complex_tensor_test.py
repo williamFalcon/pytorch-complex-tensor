@@ -1,0 +1,77 @@
+import pytest
+import torch
+import numpy as np
+from pytorch_complex_tensor import ComplexTensor
+
+
+def test_grad():
+    """
+    Grad calculated first with tensorflow
+    :return:
+    """
+
+    c = ComplexTensor([[1, 3, 5], [7,9,11], [2,4,6], [8,10,12]])
+    c.requires_grad = True
+
+    # simulate some ops
+    out = c + 4
+    out = out.mm(c.t())
+
+    # calc grad
+    out = out.sum()
+    out.backward()
+
+    # d_out/dc
+    g = c.grad.view(-1).data.numpy()
+
+    # solution (as provided by running same ops in tensorflow)
+    """
+    tf_c2 = tf.constant([[1+2j, 3+4j, 5+6j], [7+8j,9+10j,11+12j]], dtype=tf.complex64)
+    
+    with tf.GradientTape() as t:
+    t.watch(tf_c2)
+    tf_out = tf_c2 + 4
+    tf_out = tf.matmul(tf_out, tf.transpose(tf_c2, perm=[1,0]))
+    
+    tf_y = tf.reduce_sum(tf_out)
+    dy_dc2 = t.gradient(tf_y, tf_c2)
+    
+    # solution
+    print(dy_dc2)
+    """
+    #
+    sol = np.asarray([24, 32, 40, 24, 32, 40, -20, -28, -36, -20, -28, -36])
+    assert np.array_equal(g, sol)
+
+
+def test_real_scalar_sum():
+
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = c + 4
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = sol + 4
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+def test_complex_scalar_sum():
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = c + (4+3j)
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = sol + (4+3j)
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+if __name__ == '__main__':
+    pytest.main([__file__])
