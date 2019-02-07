@@ -49,6 +49,26 @@ def test_grad():
 
 
 # ------------------
+# REDUCE FX TESTS
+# ------------------
+def test_abs():
+    c = ComplexTensor(torch.zeros(4, 3)) + 2
+    c = (4+3j) * c
+    c = c.abs()
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64) + 2
+    sol = (4+3j) * sol
+    sol = np.abs(sol)
+
+    sol = sol.flatten()
+    sol = list(sol.real)
+
+    assert np.array_equal(c, sol)
+
+
+# ------------------
 # SUM TESTS
 # ------------------
 def test_real_scalar_sum():
@@ -116,12 +136,12 @@ def test_complex_matrix_sum():
 # MULT TESTS
 # ------------------
 def test_scalar_mult():
-    c = ComplexTensor(torch.zeros(4, 3))
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
     c = c * 4
     c = c.view(-1).data.numpy()
 
     # do the same in numpy
-    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = np.zeros((2, 3)).astype(np.complex64) + 1
     sol = sol * 4
     sol = sol.flatten()
     sol = list(sol.real) + list(sol.imag)
@@ -130,12 +150,12 @@ def test_scalar_mult():
 
 
 def test_scalar_rmult():
-    c = ComplexTensor(torch.zeros(4, 3))
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
     c = 4 * c
     c = c.view(-1).data.numpy()
 
     # do the same in numpy
-    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = np.zeros((2, 3)).astype(np.complex64) + 1
     sol = 4 * sol
     sol = sol.flatten()
     sol = list(sol.real) + list(sol.imag)
@@ -144,12 +164,12 @@ def test_scalar_rmult():
 
 
 def test_complex_mult():
-    c = ComplexTensor(torch.zeros(4, 3))
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
     c = c * (4+3j)
     c = c.view(-1).data.numpy()
 
     # do the same in numpy
-    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = np.zeros((2, 3)).astype(np.complex64) + 1
     sol = sol * (4+3j)
     sol = sol.flatten()
     sol = list(sol.real) + list(sol.imag)
@@ -158,12 +178,12 @@ def test_complex_mult():
 
 
 def test_complex_rmult():
-    c = ComplexTensor(torch.zeros(4, 3))
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
     c = (4+3j) * c
     c = c.view(-1).data.numpy()
 
     # do the same in numpy
-    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = np.zeros((2, 3)).astype(np.complex64) + 1
     sol = (4+3j) * sol
     sol = sol.flatten()
     sol = list(sol.real) + list(sol.imag)
@@ -176,12 +196,12 @@ def test_complex_complex_ele_mult():
     Complex mtx x complex mtx elementwise multiply
     :return:
     """
-    c = ComplexTensor(torch.zeros(4, 3))
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
     c = c * c
     c = c.view(-1).data.numpy()
 
     # do the same in numpy
-    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = np.zeros((2, 3)).astype(np.complex64) + 1
     sol = sol * sol
     sol = sol.flatten()
     sol = list(sol.real) + list(sol.imag)

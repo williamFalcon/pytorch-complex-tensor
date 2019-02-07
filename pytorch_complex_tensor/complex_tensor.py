@@ -302,13 +302,17 @@ class ComplexTensor(torch.Tensor):
 
 
 if __name__ == '__main__':
-    c = ComplexTensor(3, 2)
-    print(c.size())
-    print(c.shape)
-    c.requires_grad = True
+    c = ComplexTensor(torch.zeros(4, 3)) + 2
+    c = (4+3j) * c
+    c = c.abs()
+    c = c.view(-1).data.numpy()
 
-    # simulate some ops
-    out = c + 4
-    out = out.mm(c.t())
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64) + 2
+    sol = (4+3j) * sol
+    sol = np.abs(sol)
 
-    print(out.size())
+    sol = sol.flatten()
+    sol = list(sol.real)
+
+    assert np.array_equal(c, sol)
