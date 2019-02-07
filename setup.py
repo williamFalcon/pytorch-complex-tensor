@@ -2,7 +2,8 @@
 
 from setuptools import setup, find_packages
 
-setup(name='pytorch-complex-tensor',
+setup(
+      name='pytorch-complex-tensor',
       version='0.0.128',
       description='Pytorch complex tensor',
       author='William Falcon',
@@ -14,4 +15,4 @@ setup(name='pytorch-complex-tensor',
             'torchvision>=0.2.1'
       ],
       packages=find_packages()
-      )
+)
