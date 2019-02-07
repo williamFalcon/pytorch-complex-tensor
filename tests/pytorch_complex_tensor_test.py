@@ -6,7 +6,7 @@ from pytorch_complex_tensor import ComplexTensor
 
 # ------------------
 # GRAD TESTS
-# ------------------
+# -------------------
 def test_grad():
     """
     Grad calculated first with tensorflow
