@@ -3,23 +3,21 @@
     <img alt="react-router" src="https://raw.githubusercontent.com/williamfalcon/test-tube/master/imgs/test_tube_logo.png" width="50">
   </a> -->
 </p>
-<h3 align="center">
+<h2 align="center">
   Pytorch Complex Tensor
-</h3>
+</h2>
 <p align="center">
   Unofficial complex Tensor support for Pytorch 
 </p>
 <p align="center">
-  <a href="https://badge.fury.io/py/pytorch_complex_tensor><img src="https://badge.fury.io/py/pytorch_complex_tensor.svg"></a>
-  <a href="https://travis-ci.org/williamFalcon/pytorch-complex-tensor"><img src="https://travis-ci.org/williamFalcon/pytorch-complex-tensor.svg?branch=master"></a>
+  <a href="https://circleci.com/gh/williamFalcon/pytorch-complex-tensor/"><img src="https://circleci.com/gh/williamFalcon/pytorch-complex-tensor.svg?style=svg"></a>
 <!--   <a href="https://williamfalcon.github.io/test-tube/"><img src="https://readthedocs.org/projects/test-tube/badge/?version=latest"></a> -->
   <a href="https://github.com/williamFalcon/pytorch-complex-tensor/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 </p>   
 
-# pytorch-complex-tensor
-torch.Tensor subclass to emulate complex linear algebra.   
+### How it works
 
-Treats first half of tensor as real, second as imaginary.  A few arithmetic operations are implemented to emulate complex arithmetic.   
+Treats first half of tensor as real, second as imaginary.  A few arithmetic operations are implemented to emulate complex arithmetic. Supports gradients.   
 
 ### Installation
 ```bash
