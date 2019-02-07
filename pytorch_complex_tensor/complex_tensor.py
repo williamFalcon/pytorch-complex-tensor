@@ -46,10 +46,14 @@ class ComplexTensor(torch.Tensor):
         # x is the second to last dim in this case
         if type(x) is int and len(args) == 1:
             x = x * 2
+
         elif len(args) >= 2:
             size_args = list(args)
             size_args[-2] *= 2
             args = tuple(size_args)
+
+        else:
+            if not (x.size()[-2] % 2 == 0): raise Exception('second to last dim must be even. ComplexTensor is 2 real matrices under the hood')
 
         # init new t
         new_t = super().__new__(cls, x, *args, **kwargs)
@@ -300,7 +304,7 @@ class ComplexTensor(torch.Tensor):
 
 
 if __name__ == '__main__':
-    c = ComplexTensor(torch.zeros(4, 3)) + 2
+    c = ComplexTensor(torch.zeros(3, 3)) + 2
     print(c.size())
     print(c.shape)
     c = (4+3j) * c

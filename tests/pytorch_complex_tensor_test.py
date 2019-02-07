@@ -79,6 +79,7 @@ def test_shape():
     assert n == 12
     assert m == 8
 
+
 # ------------------
 # REDUCE FX TESTS
 # ------------------
