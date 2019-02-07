@@ -291,6 +291,15 @@ class ComplexTensor(torch.Tensor):
             size = torch.Size(size)
         return size
 
+    @property
+    def shape(self):
+        size = self.data.shape
+        if self.init_with_dim_specs:
+            size = list(size)
+            size[-2] = size[-2] // 2
+            size = torch.Size(size)
+        return size
+
 
 if __name__ == '__main__':
     c = ComplexTensor(3, 2)
