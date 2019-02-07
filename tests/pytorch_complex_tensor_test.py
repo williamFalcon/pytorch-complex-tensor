@@ -13,7 +13,7 @@ def test_grad():
     :return:
     """
 
-    c = ComplexTensor([[1, 3, 5], [7,9,11], [2,4,6], [8,10,12]])
+    c = ComplexTensor([[1, 3, 5], [7, 9, 11], [2, 4, 6], [8, 10, 12]])
     c.requires_grad = True
 
     # simulate some ops
