@@ -125,7 +125,7 @@ class ComplexTensor(torch.Tensor):
         imag = self.imag
 
         # given a real tensor
-        if type(other) is torch.Tensor:
+        if isinstance(other, torch.Tensor) and type(other) is not ComplexTensor:
             real = real + other
 
         # given a complex tensor
@@ -154,7 +154,7 @@ class ComplexTensor(torch.Tensor):
         imag = self.imag
 
         # given a real tensor
-        if type(other) is torch.Tensor:
+        if isinstance(other, torch.Tensor) and type(other) is not ComplexTensor:
             real = real - other
 
         # given a complex tensor
@@ -183,7 +183,7 @@ class ComplexTensor(torch.Tensor):
         imag = self.imag.clone()
 
         # given a real tensor
-        if type(other) is torch.Tensor:
+        if isinstance(other, torch.Tensor) and type(other) is not ComplexTensor:
             real = real * other
             imag = imag * other
 
@@ -225,7 +225,7 @@ class ComplexTensor(torch.Tensor):
         imag = self.imag.clone()
 
         # given a real tensor
-        if type(other) is torch.Tensor:
+        if isinstance(other, torch.Tensor) and type(other) is not ComplexTensor:
             real = real.mm(other)
             imag = imag.mm(other)
 
