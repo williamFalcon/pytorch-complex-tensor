@@ -144,6 +144,9 @@ class ComplexTensor(torch.Tensor):
 
         return self.__graph_copy__(real, imag)
 
+    def __radd__(self, other):
+        return self.__add__(other)
+
     def __sub__(self, other):
         """
         Handles scalar (real, complex) and tensor (real, complex) addition
@@ -172,6 +175,9 @@ class ComplexTensor(torch.Tensor):
             imag = imag - other.imag
 
         return self.__graph_copy__(real, imag)
+
+    def __rsub__(self, other):
+        return self.__sub__(other)
 
     def __mul__(self, other):
         """
