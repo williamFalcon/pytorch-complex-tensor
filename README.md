@@ -10,7 +10,7 @@
   Unofficial complex Tensor support for Pytorch 
 </p>
 <p align="center">
-      <a href="https://badge.fury.io/py/test_tube"><img src="https://badge.fury.io/py/pytorch_complex_tensor.svg"></a>
+      <a href="https://badge.fury.io/py/pytorch_complex_tensor"><img src="https://badge.fury.io/py/pytorch_complex_tensor.svg"></a>
   <a href="https://circleci.com/gh/williamFalcon/pytorch-complex-tensor/"><img src="https://circleci.com/gh/williamFalcon/pytorch-complex-tensor.svg?style=svg"></a>
 <!--   <a href="https://williamfalcon.github.io/test-tube/"><img src="https://readthedocs.org/projects/test-tube/badge/?version=latest"></a> -->
   <a href="https://github.com/williamFalcon/pytorch-complex-tensor/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
