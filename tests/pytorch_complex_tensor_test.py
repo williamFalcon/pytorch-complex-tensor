@@ -4,6 +4,9 @@ import numpy as np
 from pytorch_complex_tensor import ComplexTensor
 
 
+# ------------------
+# GRAD TESTS
+# ------------------
 def test_grad():
     """
     Grad calculated first with tensorflow
@@ -44,6 +47,9 @@ def test_grad():
     assert np.array_equal(g, sol)
 
 
+# ------------------
+# SUM TESTS
+# ------------------
 def test_real_scalar_sum():
 
     c = ComplexTensor(torch.zeros(4, 3))
@@ -71,6 +77,101 @@ def test_complex_scalar_sum():
     sol = list(sol.real) + list(sol.imag)
 
     assert np.array_equal(c, sol)
+
+# ------------------
+# MULT TESTS
+# ------------------
+def test_scalar_mult():
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = c * 4
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = sol * 4
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+def test_scalar_rmult():
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = 4 * c
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = 4 * sol
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+def test_complex_mult():
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = c * (4+3j)
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = sol * (4+3j)
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+def test_complex_rmult():
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = (4+3j) * c
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = (4+3j) * sol
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+# ------------------
+# MM TESTS
+# ------------------
+def test_complex_real_mm():
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
+    r = torch.ones(2, 3) * 2 + 3
+    cr = c.mm(r.t())
+    cr = cr.view(-1).data.numpy()
+
+    # do the same in numpy
+    np_c = np.ones((2, 3)).astype(np.complex64)
+    np_r = np.ones((2, 3)) * 2 + 3
+    np_cr = np.matmul(np_c, np_r.T)
+
+    # compare
+    np_cr = np_cr.flatten()
+    np_cr = list(np_cr.real) + list(np_cr.imag)
+
+    assert np.array_equal(np_cr, cr)
+
+
+def test_complex_complex_mm():
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
+    cc = c.mm(c.t())
+    cc = cc.view(-1).data.numpy()
+
+    # do the same in numpy
+    np_c = np.ones((2, 3)).astype(np.complex64)
+    np_cc = np.matmul(np_c, np_c.T)
+
+    # compare
+    np_cc = np_cc.flatten()
+    np_cc = list(np_cc.real) + list(np_cc.imag)
+
+    assert np.array_equal(np_cc, cc)
 
 
 if __name__ == '__main__':

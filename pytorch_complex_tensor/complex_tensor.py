@@ -255,5 +255,7 @@ class ComplexTensor(torch.Tensor):
 
 
 if __name__ == '__main__':
-    c = ComplexTensor(torch.Tensor(4, 4))
-    print('c')
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
+    r = torch.ones(2, 3) * 2 + 3
+    cr = c.mm(r.t())
+    print(cr)
