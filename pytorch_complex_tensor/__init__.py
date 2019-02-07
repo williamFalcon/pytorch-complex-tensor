@@ -1,3 +1,3 @@
-from .complex_scalar import ComplexScalar
-from .complex_grad import ComplexGrad
-from .complex_tensor import ComplexTensor
+from pytorch_complex_tensor.complex_scalar import ComplexScalar
+from pytorch_complex_tensor.complex_grad import ComplexGrad
+from pytorch_complex_tensor.complex_tensor import ComplexTensor

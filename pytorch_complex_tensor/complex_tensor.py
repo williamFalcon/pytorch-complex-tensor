@@ -53,7 +53,11 @@ class ComplexTensor(torch.Tensor):
             args = tuple(size_args)
 
         else:
-            if not (x.size()[-2] % 2 == 0): raise Exception('second to last dim must be even. ComplexTensor is 2 real matrices under the hood')
+            if isinstance(x, torch.Tensor):
+                s = x.size()[-2]
+            else:
+                s = len(x)
+            if not (s % 2 == 0): raise Exception('second to last dim must be even. ComplexTensor is 2 real matrices under the hood')
 
         # init new t
         new_t = super().__new__(cls, x, *args, **kwargs)
@@ -106,7 +110,7 @@ class ComplexTensor(torch.Tensor):
     def __graph_copy_scalar__(self, real, imag):
         # return tensor copy but maintain graph connections
         # force the result to be a ComplexTensor
-        result = torch.stack([real, imag], dim=0)
+        result = torch.stack([real, imag], dim=-2)
         result.__class__ = ComplexScalar
         return result
 
@@ -301,22 +305,3 @@ class ComplexTensor(torch.Tensor):
         size[-2] = size[-2] // 2
         size = torch.Size(size)
         return size
-
-
-if __name__ == '__main__':
-    c = ComplexTensor(torch.zeros(3, 3)) + 2
-    print(c.size())
-    print(c.shape)
-    c = (4+3j) * c
-    c = -c
-    print('a')
-
-    # do the same in numpy
-    sol = np.zeros((2, 3)).astype(np.complex64) + 2
-    sol = (4+3j) * sol
-    sol = np.abs(sol)
-
-    sol = sol.flatten()
-    sol = list(sol.real)
-
-    assert np.array_equal(c, sol)
