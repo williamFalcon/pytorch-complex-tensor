@@ -221,6 +221,9 @@ class ComplexTensor(torch.Tensor):
     def __rmul__(self, other):
         return self.__mul__(other)
 
+    def __neg__(self):
+        return self.__mul__(-1)
+
     def mm(self, other):
         """
         Handles tensor (real, complex) matrix multiply
@@ -310,8 +313,8 @@ class ComplexTensor(torch.Tensor):
 if __name__ == '__main__':
     c = ComplexTensor(torch.zeros(4, 3)) + 2
     c = (4+3j) * c
-    c = c.abs()
-    c = c.view(-1).data.numpy()
+    c = -c
+    print('a')
 
     # do the same in numpy
     sol = np.zeros((2, 3)).astype(np.complex64) + 2
