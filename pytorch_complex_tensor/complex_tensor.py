@@ -88,16 +88,18 @@ class ComplexTensor(torch.Tensor):
 
     @property
     def real(self):
-        n, m = self.size()
+        size = self.size()
+        n = size[-2]
         n = n * 2
-        result = self[:n//2]
+        result = self[..., :n//2, :]
         return result
 
     @property
     def imag(self):
-        n, m = self.size()
+        size = self.size()
+        n = size[-2]
         n = n * 2
-        result = self[n//2:]
+        result = self[..., n//2:, :]
         return result
 
     def __graph_copy__(self, real, imag):

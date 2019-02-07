@@ -15,5 +15,7 @@ def test_stack():
 
     assert size[0] == 3 and size[1] == 2 and size[2] == 3
 
+
 if __name__ == '__main__':
     pytest.main([__file__])
+
