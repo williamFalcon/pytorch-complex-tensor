@@ -78,6 +78,38 @@ def test_complex_scalar_sum():
 
     assert np.array_equal(c, sol)
 
+
+def test_real_matrix_sum():
+
+    c = ComplexTensor(torch.zeros(4, 3))
+    r = torch.ones(2, 3)
+    c = c + r
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol_r = np.ones((2, 3))
+    sol = sol + sol_r
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+def test_complex_matrix_sum():
+
+    c = ComplexTensor(torch.zeros(4, 3))
+    cc = c + c
+    cc = cc.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = sol + sol
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(cc, sol)
+
 # ------------------
 # MULT TESTS
 # ------------------
@@ -137,10 +169,54 @@ def test_complex_rmult():
     assert np.array_equal(c, sol)
 
 
+def test_complex_complex_ele_mult():
+    """
+    Complex mtx x complex mtx elementwise multiply
+    :return:
+    """
+    c = ComplexTensor(torch.zeros(4, 3))
+    c = c * c
+    c = c.view(-1).data.numpy()
+
+    # do the same in numpy
+    sol = np.zeros((2, 3)).astype(np.complex64)
+    sol = sol * sol
+    sol = sol.flatten()
+    sol = list(sol.real) + list(sol.imag)
+
+    assert np.array_equal(c, sol)
+
+
+def test_complex_real_ele_mult():
+    """
+    Complex mtx x real mtx elementwise multiply
+    :return:
+    """
+    c = ComplexTensor(torch.zeros(4, 3)) + 1
+    r = torch.ones(2, 3) * 2 + 3
+    cr = c * r
+    cr = cr.view(-1).data.numpy()
+
+    # do the same in numpy
+    np_c = np.ones((2, 3)).astype(np.complex64)
+    np_r = np.ones((2, 3)) * 2 + 3
+    np_cr = np_c * np_r
+
+    # compare
+    np_cr = np_cr.flatten()
+    np_cr = list(np_cr.real) + list(np_cr.imag)
+
+    assert np.array_equal(np_cr, cr)
+
+
 # ------------------
 # MM TESTS
 # ------------------
 def test_complex_real_mm():
+    """
+    Complex mtx x real mtx matrix multiply
+    :return:
+    """
     c = ComplexTensor(torch.zeros(4, 3)) + 1
     r = torch.ones(2, 3) * 2 + 3
     cr = c.mm(r.t())
@@ -159,6 +235,10 @@ def test_complex_real_mm():
 
 
 def test_complex_complex_mm():
+    """
+    Complex mtx x complex mtx matrix multiply
+    :return:
+    """
     c = ComplexTensor(torch.zeros(4, 3)) + 1
     cc = c.mm(c.t())
     cc = cc.view(-1).data.numpy()
