@@ -44,21 +44,15 @@ class ComplexTensor(torch.Tensor):
         # double the second to last dim (..., 1, 3, 2) -> (..., 1, 6, 2)
 
         # x is the second to last dim in this case
-        init_with_dim_specs = False
         if type(x) is int and len(args) == 1:
             x = x * 2
-            init_with_dim_specs = True
         elif len(args) >= 2:
             size_args = list(args)
             size_args[-2] *= 2
             args = tuple(size_args)
-            init_with_dim_specs = True
 
         # init new t
         new_t = super().__new__(cls, x, *args, **kwargs)
-
-        # pass on flag bc we doubled a dim
-        new_t.init_with_dim_specs = init_with_dim_specs
         return new_t
 
     def __deepcopy__(self, memo):
@@ -87,16 +81,14 @@ class ComplexTensor(torch.Tensor):
     @property
     def real(self):
         n, m = self.size()
-        if self.init_with_dim_specs:
-            n = n * 2
+        n = n * 2
         result = self[:n//2]
         return result
 
     @property
     def imag(self):
         n, m = self.size()
-        if self.init_with_dim_specs:
-            n = n * 2
+        n = n * 2
         result = self[n//2:]
         return result
 
@@ -105,7 +97,6 @@ class ComplexTensor(torch.Tensor):
         # force the result to be a ComplexTensor
         result = torch.cat([real, imag], dim=0)
         result.__class__ = ComplexTensor
-        setattr(result, 'init_with_dim_specs', self.init_with_dim_specs)
         return result
 
     def __graph_copy_scalar__(self, real, imag):
@@ -294,24 +285,24 @@ class ComplexTensor(torch.Tensor):
 
     def size(self, *args):
         size = self.data.size(*args)
-        if self.init_with_dim_specs:
-            size = list(size)
-            size[-2] = size[-2] // 2
-            size = torch.Size(size)
+        size = list(size)
+        size[-2] = size[-2] // 2
+        size = torch.Size(size)
         return size
 
     @property
     def shape(self):
         size = self.data.shape
-        if self.init_with_dim_specs:
-            size = list(size)
-            size[-2] = size[-2] // 2
-            size = torch.Size(size)
+        size = list(size)
+        size[-2] = size[-2] // 2
+        size = torch.Size(size)
         return size
 
 
 if __name__ == '__main__':
     c = ComplexTensor(torch.zeros(4, 3)) + 2
+    print(c.size())
+    print(c.shape)
     c = (4+3j) * c
     c = -c
     print('a')
