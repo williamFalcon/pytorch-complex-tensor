@@ -16,9 +16,6 @@
   <a href="https://github.com/williamFalcon/pytorch-complex-tensor/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
 </p>   
 
-
-[![CircleCI](https://circleci.com/gh/williamFalcon/pytorch-complex-tensor/tree/master.svg?style=svg)](https://circleci.com/gh/williamFalcon/pytorch-complex-tensor/tree/master)
-
 # pytorch-complex-tensor
 torch.Tensor subclass to emulate complex linear algebra.   
 
