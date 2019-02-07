@@ -110,6 +110,7 @@ def test_complex_matrix_sum():
 
     assert np.array_equal(cc, sol)
 
+
 # ------------------
 # MULT TESTS
 # ------------------
