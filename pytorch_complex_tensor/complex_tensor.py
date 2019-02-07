@@ -182,6 +182,9 @@ class ComplexTensor(torch.Tensor):
 
         return self.__graph_copy__(real, imag)
 
+    def __rmul__(self, other):
+        return self.__mul__(other)
+
     def mm(self, other):
         """
         Handles tensor (real, complex) matrix multiply
