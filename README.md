@@ -3,9 +3,9 @@
     <img alt="react-router" src="https://raw.githubusercontent.com/williamfalcon/test-tube/master/imgs/test_tube_logo.png" width="50">
   </a> -->
 </p>
-<h3 align="center">
+<h2 align="center">
   Pytorch Complex Tensor
-</h3>
+</h2>
 <p align="center">
   Unofficial complex Tensor support for Pytorch 
 </p>
