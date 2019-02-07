@@ -48,6 +48,37 @@ def test_grad():
     assert np.array_equal(g, sol)
 
 
+def test_size():
+    # test sizing when init with tensor
+    c = ComplexTensor(torch.zeros(4, 3))
+    size = c.size()
+    n, m = size[-2:]
+    assert n == 2
+    assert m == 3
+
+    # test sizing when init with dim spec
+    c = ComplexTensor(12, 8)
+    size = c.size()
+    n, m = size[-2:]
+    assert n == 12
+    assert m == 8
+
+
+def test_shape():
+    # test sizing when init with tensor
+    c = ComplexTensor(torch.zeros(4, 3))
+    size = c.shape
+    n, m = size[-2:]
+    assert n == 2
+    assert m == 3
+
+    # test sizing when init with dim spec
+    c = ComplexTensor(12, 8)
+    size = c.shape
+    n, m = size[-2:]
+    assert n == 12
+    assert m == 8
+
 # ------------------
 # REDUCE FX TESTS
 # ------------------
