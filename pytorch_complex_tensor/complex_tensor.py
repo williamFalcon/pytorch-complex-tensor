@@ -56,8 +56,10 @@ class ComplexTensor(torch.Tensor):
         else:
             if isinstance(x, torch.Tensor):
                 s = x.size()[-2]
-            else:
+            elif isinstance(x, list):
                 s = len(x)
+            elif isinstance(x, np.ndarray):
+                s = x.shape[-2]
             if not (s % 2 == 0): raise Exception('second to last dim must be even. ComplexTensor is 2 real matrices under the hood')
 
         # init new t

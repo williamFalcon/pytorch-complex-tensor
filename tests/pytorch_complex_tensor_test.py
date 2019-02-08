@@ -308,5 +308,12 @@ def test_complex_complex_mm():
     assert np.array_equal(np_cc, cc)
 
 
+def test_get_item():
+    """
+    Tests selecting behavior
+    :return:
+    """
+    rand = np.random.random_integers(0, 10, (3,4,5,6))
+
 if __name__ == '__main__':
     pytest.main([__file__])
