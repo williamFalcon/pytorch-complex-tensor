@@ -309,11 +309,39 @@ def test_complex_complex_mm():
 
 
 def test_get_item():
-    """
-    Tests selecting behavior
-    :return:
-    """
-    rand = np.random.random_integers(0, 10, (3,4,5,6))
+    # init random complex numpy and ct tensors
+    a = np.random.randint(0, 10, (3, 2, 3))
+    a = a * (1+5j)
+    ct = ComplexTensor(a)
+
+    # match dim 0
+    __assert_tensors_equal(ct[0], a[0])
+    __assert_tensors_equal(ct[-1], a[-1])
+
+    # match dim 1
+    __assert_tensors_equal(ct[:, 0], a[:, 0])
+    __assert_tensors_equal(ct[:, -1], a[:, -1])
+
+    # match dim 2
+    __assert_tensors_equal(ct[:, :, 0], a[:, :, 0])
+    __assert_tensors_equal(ct[:, :, -1], a[:, :, -1])
+
+    # match ranges
+    __assert_tensors_equal(ct[0:1, 0, -2:], a[0:1, 0, -2:])
+    __assert_tensors_equal(ct[-1:, -1:, -2:], a[-1:, -1:, -2:])
+    __assert_tensors_equal(ct[:-1, :-1, :-2], a[:-1, :-1, :-2])
+
+
+def __assert_tensors_equal(ct_tensor, np_tensor):
+    # assert we have complexTensor
+    assert type(ct_tensor) is ComplexTensor
+
+    # assert values are same
+    np_tensor = np_tensor.flatten()
+    np_tensor = list(np_tensor.real) + list(np_tensor.imag)
+    ct_tensor = ct_tensor.flatten().data.numpy()
+    assert np.array_equal(np_tensor, ct_tensor)
+
 
 if __name__ == '__main__':
     pytest.main([__file__])
