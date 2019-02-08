@@ -278,13 +278,14 @@ class ComplexTensor(torch.Tensor):
         return g
 
     def __repr__(self):
-        size = self.real.size()
-        real = self.real.view(-1)
-        imag = self.imag.view(-1)
-        strings = np.asarray([f'({a}{"+" if b > 0 else "-"}{abs(b)}j)' for a, b in zip(real, imag)])
-        strings = strings.reshape(*size)
-        strings = f'tensor({strings.__str__()})'
-        strings = re.sub('\n', ',\n       ', strings)
+        real = self.real.flatten()
+        imag = self.imag.flatten()
+
+        # use numpy to print for us
+        # strings = np.asarray([f'({a}{"+" if b > 0 else "-"}{abs(b)}j)' for a, b in zip(real, imag)])
+        strings = np.asarray([complex(a,b) for a, b in zip(real, imag)]).astype(np.complex64)
+        strings = strings.__repr__()
+        strings = re.sub('array', 'tensor', strings)
         return strings
 
     def __str__(self):
