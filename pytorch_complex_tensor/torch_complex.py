@@ -10,8 +10,7 @@ def __graph_copy__(real, imag):
     return result
 
 
-def stack(items, *args, **kwargs):
-    fx = torch.stack
+def __apply_fx_to_parts(items, fx, *args, **kwargs):
     r = [x.real for x in items]
     r = fx(r, *args, **kwargs)
 
@@ -19,3 +18,12 @@ def stack(items, *args, **kwargs):
     i = fx(i, *args, **kwargs)
 
     return __graph_copy__(r, i)
+
+
+def stack(items, *args, **kwargs):
+    return __apply_fx_to_parts(items, torch.stack, *args, **kwargs)
+
+
+def cat(items, *args, **kwargs):
+    return __apply_fx_to_parts(items, torch.cat, *args, **kwargs)
+
