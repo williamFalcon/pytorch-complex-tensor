@@ -1,5 +1,6 @@
 from pytorch_complex_tensor import ComplexScalar, ComplexGrad
 
+import inspect
 import numpy as np
 import torch
 import re
@@ -308,3 +309,20 @@ class ComplexTensor(torch.Tensor):
         size[-2] = size[-2] // 2
         size = torch.Size(size)
         return size
+
+    def __getitem__(self, item):
+
+        # when real or imag is the caller return regular tensor
+        curframe = inspect.currentframe()
+        calframe = inspect.getouterframes(curframe, 2)
+        caller = calframe[1][3]
+
+        if caller == 'real' or caller == 'imag':
+            return super(ComplexTensor, self).__getitem__(item)
+
+        # this is a regular index op, select the requested pairs then form a new ComplexTensor
+        r = self.real[item]
+        c = self.imag[item]
+
+        return self.__graph_copy__(r, c)
+
