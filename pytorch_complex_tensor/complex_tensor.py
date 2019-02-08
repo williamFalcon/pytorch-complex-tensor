@@ -44,6 +44,13 @@ class ComplexTensor(torch.Tensor):
         # requested to init with dim list
         # double the second to last dim (..., 1, 3, 2) -> (..., 1, 6, 2)
 
+        # reformat complex numpy arrays so we can init with them
+        if isinstance(x, np.ndarray) and x.dtype == np.complex_:
+            # collapse second to last dim
+            r = x.real
+            i = x.imag
+            x = np.concatenate([r, i], axis=-2)
+
         # x is the second to last dim in this case
         if type(x) is int and len(args) == 1:
             x = x * 2
