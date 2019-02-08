@@ -26,13 +26,15 @@ pip install pytorch-complex-tensor
 ```
 
 ### Example:   
-Easy import  
+Easy import    
+
 ```python   
 from pytorch_complex_tensor import ComplexTensor
 ```   
 
-Init tensor
-```
+Init tensor    
+
+```python
 # equivalent to:
 # np.asarray([[1+3j, 1+3j, 1+3j], [2+4j, 2+4j, 2+4j]]).astype(np.complex64)
 C = ComplexTensor([[1, 1, 1], [2, 2, 2], [3, 3, 3], [4, 4, 4]])
@@ -40,14 +42,16 @@ C.requires_grad = True
 ```   
 
 Pretty printing
-```
+
+```python
 print(C)
 # tensor([['(1.0+3.0j)' '(1.0+3.0j)' '(1.0+3.0j)'],
 #         ['(2.0+4.0j)' '(2.0+4.0j)' '(2.0+4.0j)']])
 ```
 
 handles absolute value properly for complex tensors
-```
+
+```python
 # complex absolute value implementation
 print(C.abs())
 # tensor([[3.1623, 3.1623, 3.1623],
@@ -56,13 +60,13 @@ print(C.abs())
 
 
 prints correct sizing treating first half of matrix as real, second as imag
-```
+```python
 print(C.size())
 # torch.Size([2, 3])
 ```
 
 multiplies both complex and real tensors
-```
+```python
 # show matrix multiply with real tensor
 # also works with complex tensor
 x = torch.Tensor([[3, 3], [4, 4], [2, 2]])
@@ -73,7 +77,7 @@ print(xy)
 ```
 
 reduce ops return ComplexScalar
-```
+```python
 xy = xy.sum()
 
 # this is now a complex scalar (thin wrapper with .real, .imag)
@@ -85,7 +89,7 @@ print(xy)
 ```
 
 which can be used for gradients without breaking anything... (differentiates wrt the real part)
-```
+```python
 # calculate dxy / dC
 # for complex scalars, grad is wrt the real part
 xy.backward()
@@ -94,6 +98,12 @@ print(C.grad)
 #         ['(6.0-0.0j)' '(8.0-0.0j)' '(4.0-0.0j)']])
 ```
 
+supports all section ops...  
+```python
+print(C[-1])
+print(C[0, 0:-2, ...])
+print(C[0, ..., 0])
+```
 
 
 ### Supported ops:
