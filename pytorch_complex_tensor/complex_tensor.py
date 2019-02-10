@@ -310,6 +310,12 @@ class ComplexTensor(torch.Tensor):
 
         return g
 
+    def cuda(self):
+        real = self.real.cuda()
+        imag = self.imag.cuda()
+
+        return self.__graph_copy__(real, imag)
+
     def __repr__(self):
         real = self.real.flatten()
         imag = self.imag.flatten()
