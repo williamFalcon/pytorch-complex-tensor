@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
       name='pytorch-complex-tensor',
-      version='0.0.131',
+      version='0.0.132',
       description='Pytorch complex tensor',
       author='William Falcon',
       author_email='waf2107@columbia.edu',
