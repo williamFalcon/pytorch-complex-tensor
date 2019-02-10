@@ -229,6 +229,29 @@ class ComplexTensor(torch.Tensor):
 
         return self.__graph_copy__(real, imag)
 
+    def __truediv__(self, other):
+        real = self.real.clone()
+        imag = self.imag.clone()
+
+        # given a real tensor
+        if isinstance(other, torch.Tensor) and type(other) is not ComplexTensor:
+            raise NotImplementedError
+
+        # given a complex tensor
+        elif type(other) is ComplexTensor:
+            raise NotImplementedError
+
+        # given a real scalar
+        elif np.isreal(other):
+            real = real / other
+            imag = imag / other
+
+        # given a complex scalar
+        else:
+            raise NotImplementedError
+
+        return self.__graph_copy__(real, imag)
+
     def __rmul__(self, other):
         return self.__mul__(other)
 
