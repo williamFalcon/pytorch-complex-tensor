@@ -324,10 +324,21 @@ class ComplexTensor(torch.Tensor):
 
     def tan(self):
         real = self.real.clone()
-        imag = self.real.clone()
-        z = self.__graph_copy__(real, imag)
-        a = z.sin()
-        b = z.cos()
+        imag = self.imag.clone()
+
+        denom = 1.0 + torch.tan(real)**2 * torch.tanh(imag)**2
+
+        a = torch.tan(real) - torch.tan(real) * torch.tanh(imag)**2
+        b = torch.tanh(imag) + torch.tanh(imag) * torch.tan(real)**2
+
+        real = a / denom
+        imag = b / denom
+
+        return self.__graph_copy__(real, imag)
+
+        # z = self.__graph_copy__(real, imag)
+        # a = z.sin()
+        # b = z.cos()
 
         # a = torch.tan(real)
         # b = torch.tanh(imag)
@@ -335,13 +346,13 @@ class ComplexTensor(torch.Tensor):
         # nominator =   self.__graph_copy__(a, b)
         # denom = self.__graph_copy__(1.0, ab.__neg__() )
 
-        return a / b 
+        # return a / b 
 
 
 
     #%% Ended Added by Sakira Hassan
 
-        return torch.sin(real)
+        
 
     @property
     def grad(self):
