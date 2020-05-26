@@ -303,6 +303,57 @@ class ComplexTensor(torch.Tensor):
         imag_mean = self.imag.mean(*args)
         return ComplexScalar(real_mean, imag_mean)
 
+    #%% Added by Sakira Hassan @25.05.2020
+    def sin(self):
+        real = self.real.clone()
+        imag = self.imag.clone()
+
+        ab = torch.sin(real) * torch.cosh(imag)
+        cd = torch.cos(real) * torch.sinh(imag)
+
+        return self.__graph_copy__(ab, cd)
+
+    def cos(self):
+        real = self.real.clone()
+        imag = self.imag.clone()
+
+        ab = torch.cos(real) * torch.cosh(imag)
+        cd = torch.sin(real) * torch.sinh(imag)
+
+        return self.__graph_copy__(ab, cd)
+
+    def tan(self):
+        real = self.real.clone()
+        imag = self.imag.clone()
+
+        denom = 1.0 + torch.tan(real)**2 * torch.tanh(imag)**2
+
+        a = torch.tan(real) - torch.tan(real) * torch.tanh(imag)**2
+        b = torch.tanh(imag) + torch.tanh(imag) * torch.tan(real)**2
+
+        real = a / denom
+        imag = b / denom
+
+        return self.__graph_copy__(real, imag)
+
+        # z = self.__graph_copy__(real, imag)
+        # a = z.sin()
+        # b = z.cos()
+
+        # a = torch.tan(real)
+        # b = torch.tanh(imag)
+        # ab = a * b
+        # nominator =   self.__graph_copy__(a, b)
+        # denom = self.__graph_copy__(1.0, ab.__neg__() )
+
+        # return a / b 
+
+
+
+    #%% Ended Added by Sakira Hassan
+
+        
+
     @property
     def grad(self):
         g = self._grad
