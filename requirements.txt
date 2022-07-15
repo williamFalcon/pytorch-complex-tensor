@@ -3,7 +3,7 @@ attrs==18.2.0
 certifi==2018.11.29
 cffi==1.11.5
 chardet==3.0.4
-codecov==2.0.15
+codecov==2.0.16
 coverage==4.5.2
 idna==2.8
 more-itertools==5.0.0
